@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1746a2">
+  <title>Portal Ujian Kelas VI</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #eef4ff;
+      color: #183153;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 460px;
+      background: white;
+      border-radius: 22px;
+      padding: 28px 22px;
+      box-shadow: 0 8px 28px #173c741c;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      color: #1746a2;
+      font-size: 26px;
+      margin: 8px 0;
+    }
+
+    .school {
+      color: #60718a;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .notice {
+      background: #fff5d9;
+      border-radius: 12px;
+      padding: 14px;
+      text-align: left;
+      margin: 22px 0;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      font-weight: bold;
+      margin: 14px 0 7px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ccd5e4;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      border: 0;
+      border-radius: 12px;
+      padding: 15px;
+      margin-top: 20px;
+      background: #1746a2;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background: #8494b3;
+      cursor: not-allowed;
+    }
+
+    .small {
+      font-size: 12px;
+      color: #68778d;
+      line-height: 1.6;
+      margin-top: 18px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="card">
+    <div class="logo">📝</div>
+
+    <h1>PORTAL UJIAN</h1>
+    <div class="school">
+      SD KELAS VI<br>
+      Tahun Pelajaran 2026/2027
+    </div>
+
+    <div class="notice">
+      <strong>📌 Tata tertib ujian</strong>
+      <ol>
+        <li>Isi nama dan nomor absen dengan benar.</li>
+        <li>Kerjakan secara mandiri dan jujur.</li>
+        <li>Jangan berdiskusi atau menyalin jawaban teman.</li>
+        <li>Periksa kembali jawaban sebelum menekan Kirim.</li>
+        <li>Jangan menutup formulir sebelum jawaban terkirim.</li>
+      </ol>
+    </div>
+
+    <label for="nama">Nama lengkap</label>
+    <input id="nama" type="text"
+      placeholder="Masukkan nama lengkap"
+      autocomplete="name">
+
+    <label for="absen">Nomor absen</label>
+    <input id="absen" type="number"
+      min="1" max="50" inputmode="numeric"
+      placeholder="Contoh: 12">
+
+    <label>
+      <input id="setuju" type="checkbox"
+        style="width:auto; margin-right:8px;">
+      Saya siap mengerjakan ujian dengan jujur.
+    </label>
+
+    <button id="mulai" disabled>
+      MULAI UJIAN
+    </button>
+
+    <p class="small">
+      Pastikan koneksi internet stabil.
+      Jawaban hanya tercatat setelah formulir
+      ujian berhasil dikirim.
+    </p>
+  </main>
+
+  <script>
+    // GANTI alamat di bawah dengan link Google Forms
+    const LINK_UJIAN = "https://forms.gle/gNUWF33CP4GDU4aGA";
+
+    const nama = document.getElementById("nama");
+    const absen = document.getElementById("absen");
+    const setuju = document.getElementById("setuju");
+    const mulai = document.getElementById("mulai");
+
+    function periksa() {
+      const nomor = Number(absen.value);
+
+      mulai.disabled = !(
+        nama.value.trim().length > 0 &&
+        absen.value !== "" &&
+        Number.isInteger(nomor) &&
+        nomor >= 1 &&
+        nomor <= 50 &&
+        setuju.checked
+      );
+    }
+
+    nama.addEventListener("input", periksa);
+    absen.addEventListener("input", periksa);
+    setuju.addEventListener("change", periksa);
+
+    mulai.addEventListener("click", function () {
+      if (mulai.disabled) return;
+
+      if (!LINK_UJIAN.startsWith("https://")) {
+        alert("Guru belum memasukkan link Google Forms.");
+        return;
+      }
+
+      // Nama dan nomor absen belum dikirim otomatis.
+      // Siswa perlu mengisinya lagi di Google Forms.
+      window.location.href = LINK_UJIAN;
+    });
+  </script>
+</body>
+</html>
